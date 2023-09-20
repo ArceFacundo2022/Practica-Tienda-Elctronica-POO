@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practica POO Actividad 3</title>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>Actividad Practica De POO | Tienda electronica</h1>
+      </header>
+      <main>
+        <form name="Stock">
+          <fieldset>
+            <legend>Seccion "Stock: <b>Listado | Agregado | Edicion | Eliminacion</b>"</legend>
+            <div class="column">
+              <div class="component comp01">
+                <pre>
+<label for="title"><b>Titulo</b></label>
+<input type="text" id="title">
+<label for="description"><b>Descripcion</b></label>
+<textarea id="description"></textarea>
+<label for="ExpiredDate"><b>Fecha de vencimiento</b></label>
+<input type="date" id="expiredDate">
+<input type="button" id="addTask" value="Enviar ☑️">
+                </pre>
+              </div>
+              <div id="divTask" class="component comp01">
+                <h2>Tareas</h2>
+                <hr>
+  
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <br>
+        <form name="Precios">
+          <fieldset>
+            <legend>Seccion "Calculo de precios por: <b>Unidad | Combo | Mayoreo | Descuento</b>"</legend>
+          </fieldset>
+        </form>
+        <br>
+        <form name="Ventas">
+          <fieldset>
+            <legend>Seccion <b>Ventas</b></legend>
+          </fieldset>
+        </form>
+      </main>
+      <footer>
+
+      </footer>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+    <style>
+      header{
+        background-color: #f7edd1;
+      }
+      body{
+        background-image: url(https://thumbs.dreamstime.com/b/abandone-el-fondo-incons%C3%BAtil-del-modelo-de-la-flor-en-tono-marr%C3%B3n-y-poner-crema-desierto-103693324.jpg);
+      }
+      form {
+        background-color: #f7edd1;
+      }
+      
+      .column {
+    max-width: 1100px; /* Cambia esto según tus necesidades */
+    margin: 0 auto; /* Centrar el contenedor en la página */
+    display: flex; /* Utilizar flexbox para distribuir en columnas */
+    flex-wrap: wrap; /* Permitir que los elementos fluyan a la siguiente fila si no caben en una columna */
+    justify-content: space-between; /* Distribuir los elementos con espacio entre ellos */
+    }
+
+    /* Estilo de los componentes */
+    .component {
+        margin-bottom: 20px; /* Espacio entre los componentes */
+        padding: 10px; /* Relleno interno para los componentes */
+        border: 1px solid #ccc; /* Borde para los componentes */
+        box-sizing: border-box; /* Incluir el borde en el cálculo del ancho */
+        text-align: center; /* Centrar el contenido de los componentes */
+        background-color: #f2f2f2; /* Color de fondo de los componentes */
+    }
+
+    .subComponent {
+        margin-bottom: 20px; /* Espacio entre los componentes */
+        padding: 10px; /* Relleno interno para los componentes */
+        border: 1px solid #d8d3c5; /* Borde para los componentes */
+        box-sizing: border-box; /* Incluir el borde en el cálculo del ancho */
+        text-align: center; /* Centrar el contenido de los componentes */
+        background-color: #f7f2e4; /* Color de fondo de los componentes */
+    }
+
+    .comp01{
+      width: calc(50% - 10px); /* Calcular el ancho de cada componente en función del número de columnas */
+    }
+
+    .comp02{
+      width: calc(33.33% - 10px); /* Calcular el ancho de cada componente en función del número de columnas */
+    }
+
+    .comp03{
+      width: calc(66.66% - 10px); /* Calcular el ancho de cada componente en función del número de columnas */
+    }
+    .comp04{
+      width: calc(20% - 10px); /* Calcular el ancho de cada componente en función del número de columnas */
+    }
+
+    .Estado{
+      color: #150ee3;
+    }
+      </style>
+  </body>
+</html>
