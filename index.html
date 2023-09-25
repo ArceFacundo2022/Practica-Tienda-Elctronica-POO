@@ -12,25 +12,57 @@
         <h1>Actividad Practica De POO | Tienda electronica</h1>
       </header>
       <main>
-        <form name="Stock">
+        <form name="Product">
           <fieldset>
-            <legend>Seccion "Stock: <b>Listado | Agregado | Edicion | Eliminacion</b>"</legend>
+            <legend>Seccion "PRODUCTOS: <b>Listado | Agregado | Edicion | Eliminacion</b>"</legend>
             <div class="column">
-              <div class="component comp01">
+              <div class="component comp02">
                 <pre>
-<label for="title"><b>Titulo</b></label>
-<input type="text" id="title">
-<label for="description"><b>Descripcion</b></label>
-<textarea id="description"></textarea>
-<label for="ExpiredDate"><b>Fecha de vencimiento</b></label>
-<input type="date" id="expiredDate">
-<input type="button" id="addTask" value="Enviar ☑️">
+<label for="nameProduct"><b>Nombre del producto</b></label>
+<input type="text" id="nameProduct">
+<label for="descriptionProduct"><b>Descripcion</b></label>
+<textarea id="descriptionProduct"></textarea>
+<label for="precioProduct"><b>Precio</b></label>
+<input type="text" id="precioProduct">
+<input type="button" id="addProduct" value="Enviar ☑️">
                 </pre>
               </div>
-              <div id="divTask" class="component comp01">
-                <h2>Tareas</h2>
+              <div id="divProduct" class="component comp03">
+                <h2>Catalogo de Productos</h2>
                 <hr>
-  
+                <table>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Descripcion</th>
+                    <th>Precio</th>
+                  </tr>
+                  <tr>
+                    <td>Pepas Trio</td>
+                    <td class="descrip">Galletas de vainilla con dulce de membrillo.</td>
+                    <td>650</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <br>
+        <form name="Stock">
+          <fieldset>
+            <legend>Seccion "STOCK: <b>Listado | Agregado | Eliminacion</b>"</legend>
+            <div class="column">
+              <div class="component comp02">
+                <pre>
+<label for="nameProduct"><b>Nombre del producto</b></label>
+<input type="text" id="typeProduct">
+<label for="descriptionProduct"><b>Cantidad a agregar</b></label>
+<input type="number" id="productCant">
+<input type="button" id="addProduct" value="Enviar ☑️">
+                </pre>
+              </div>
+              <div id="divStock" class="component comp03">
+                <h2>Catalogo de Productos</h2>
+                <hr>
               </div>
             </div>
           </fieldset>
@@ -53,6 +85,11 @@
       </footer>
     </div>
     <script type="module" src="/src/main.ts"></script>
+    <script>
+      const hola = () => {
+        alert("hola")
+      }
+    </script>
     <style>
       header{
         background-color: #f7edd1;
@@ -110,5 +147,67 @@
       color: #150ee3;
     }
       </style>
+    <style>
+      table {
+        border-collapse: collapse;
+        border: 1px solid #ccc;
+        caption-side: bottom;
+        width: 100%;
+
+      }
+
+      th {
+        padding: 10px;
+      }
+
+      th {
+        background: #000;
+        color: #fff;
+        text-transform: uppercase;
+      }
+
+      td {
+        text-align: center;
+        border-bottom: 2px solid #111;
+        color: #333;
+        font-size: 18px;
+        border: 1px;
+      }
+
+      td.descrip {
+        text-align: left;
+        font-size: 14px;
+      }
+
+      td.buttons input#deleteProduct{
+        font-size: 26px;
+        font-family: "Victor Mono", monospace;
+        padding: 2px 6px;
+        background: #eee;
+        border: 3px solid #bbb;
+        border-top-width: 1px;
+        border-bottom: 3px solid #777;
+      }
+
+      th, td {
+        border: 1px solid #888;
+        padding: 10px;
+      }
+
+      tfoot td {
+        background: #666;
+        color: #eee;
+        border: 0;
+      }
+
+      tr.title th {
+        background: #000;
+        color: #fff;
+        border: 0;
+      }
+      .first { background: #ff9999; }
+      .second { background: #ff5555; }
+      .third { background: #ff2222; }
+    </style>
   </body>
 </html>

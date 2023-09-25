@@ -1,16 +1,110 @@
+
 //! ------------------------------( Tienda Electronica )--------------------------------
 
-export class producto {
+//!-------------------------------( PRODUCTOS )--------------------------------
+export interface productInfo {
+  nameProduct: string, 
+  description: string, 
+  precio: number
+}
+
+export type editProduct = {name:"nameProduct",value:string} | {name:"description",value:string} | {name:"precio",value:number}
+export class Producto {
+
 
   constructor(
     private nameProduct: string, 
     private description: string, 
-    private costo: number,
     private precio: number){
 
   }
+
+  getProduct(): productInfo{
+    return {
+      nameProduct:this.nameProduct, 
+      description: this.description, 
+      precio: this.precio
+    }
+  }
+
+  editProduct(edit:editProduct){
+    switch(edit.name){
+      case "nameProduct":
+        this.nameProduct = edit.value
+        break
+      case "description":
+        this.description = edit.value
+        break
+      case "precio":
+        this.precio = edit.value
+        break
+      }
+  }
 }
 
+//!-------------------------------( Stock )--------------------------------
+
+import { listProduct } from "../main"
+
+export interface infoStock {
+  cantProduct : string [],
+  limit: number
+}
+export class Stock{
+
+  private cantProduct: string []
+  private limit: number
+  constructor(){
+      this.cantProduct = []
+      this.limit = 50
+  }
+
+  almacenarProductos(cant:number, producto : string): boolean{
+    const existProduct = listProduct.filter((prod)=> prod.getProduct().nameProduct == producto)
+
+    if(!existProduct){
+      alert("No existe un producto con ese nombre")
+    }
+    if (this.cantProduct.length >= this.limit){
+      alert("🚚 Almacenamiento lleno 🚚")
+      return false
+    }else{
+      if(this.cantProduct.length + cant >= this.limit){
+        alert("Solo hay " + (this.limit - this.cantProduct.length) + "espacios en el almacen, reduzca la cantidad")
+        return false
+      }
+    }
+    for(let i = 0; i < cant; i++){
+      this.cantProduct.push(producto)
+    }
+    return true
+  }
+
+  quitarProducto(cant:number, nameProduct:string){
+
+    let cont: number = 0
+    this.cantProduct.forEach((prod)=> {
+      if(prod == nameProduct){
+        cont ++
+      }
+    })
+    if (cont >= cant){
+      const newCant: string [] = this.cantProduct.filter((prod)=> prod != nameProduct)
+      this.cantProduct = newCant
+    }else{
+      alert("No hay suficientes " + nameProduct + " para quitar del stock")
+      return false
+    }
+
+  }
+
+  getStock(): infoStock {
+    return {
+      cantProduct : this.cantProduct,
+      limit: this.limit
+    }
+  }
+}
 
 // import { MostrarTareas } from "../main";
 
