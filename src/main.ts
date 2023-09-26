@@ -4,24 +4,42 @@
 
 import { Producto, Stock } from "./classes/Producto"
 
-export let listProduct: Producto [] = [new Producto("Pepas TRIO", "Galletitas de vainilla con dulce de membrillo", 650)]
+export let listProduct: Producto [] = [new Producto("Mouse Xtrike me", "Mouse inhalambrico gamer con 1200 dpi", 3500, "#150ee3")]
 const almacen = new Stock()
 
-const addProduct = () => {
+const newProduct = () => {
 
       const inputName = document.getElementById('nameProduct') as HTMLInputElement
       const inputDescription = document.getElementById('descriptionProduct') as HTMLInputElement
       const inputPrecio = document.getElementById('precioProduct') as HTMLInputElement
+      const inputColor = document.getElementById('colorProduct') as HTMLInputElement
 
-      const newProduct = new Producto(inputName.value, inputDescription.value, parseInt(inputPrecio.value))
+      const newProduct = new Producto(inputName.value, inputDescription.value, parseInt(inputPrecio.value), inputColor.value)
       listProduct.push(newProduct)
-      console.log(listProduct)
       showProduct()
+      updateSelect()
+}
+
+const updateSelect = () => {
+      const SelectProduct = document.getElementById('selectProduct') as HTMLSelectElement
+      let htmlProduct = `
+      <option disabled selected>-Elige un tipo de producto-</option>
+      `
+      if (listProduct.length == 0){
+            SelectProduct.innerHTML = htmlProduct
+            return false
+      }
+      listProduct.forEach((prod)=> {
+            htmlProduct += `
+                  <option value="${prod.getProduct().nameProduct}">${prod.getProduct().nameProduct}</option>
+            `
+      })
+      SelectProduct.innerHTML = htmlProduct
 }
 
 const showProduct = () => {
 
-      const DivProduct = document.getElementById('divProduct') as HTMLInputElement
+      const DivProduct = document.getElementById('divProduct') as HTMLDivElement
       let htmlProduct = `
       <h2>Catalogo de Productos</h2>
       <hr>
@@ -40,16 +58,18 @@ const showProduct = () => {
                   <th>Producto</th>
                   <th>Descripcion</th>
                   <th>Precio</th>
+                  <th>Color</th>
                   <th>Delete</th>
             </tr>
       `
-      listProduct.forEach((prod)=> {
+      listProduct.forEach((prod, indice)=> {
             htmlProduct += `
                   <tr>
                     <td>${prod.getProduct().nameProduct}</td>
                     <td class="descrip">${prod.getProduct().description}</td>
                     <td>${prod.getProduct().precio}</td>
-                    <td class="buttons"><input type="button" id="deleteProduct" value="❎" onclick="hola()"></td>
+                    <td style="background-color: ${prod.getProduct().color};"></td>
+                    <td class="buttons"><input type="button" id="deleteProduct${indice}" value="❎"></td>
                   </tr>
             `
       })
@@ -57,13 +77,48 @@ const showProduct = () => {
       </table>
       `
       DivProduct.innerHTML = htmlProduct
+
+      listProduct.forEach((prod, indice) => {
+            document.querySelector<HTMLButtonElement>(`#deleteProduct${indice}`)!.addEventListener('click', () => {
+                  listProduct.splice(indice,1)
+                  showProduct()
+            });
+      })
+      
 }
 
-document.querySelector<HTMLButtonElement>('#addProduct')!.addEventListener('click', () => {
-  addProduct();
+document.querySelector<HTMLButtonElement>('#newProduct')!.addEventListener('click', () => {
+  newProduct();
 });
 
 showProduct()
+updateSelect()
+
+//! -------------------------------------( STOCK )------------------------------------------------------
+
+const addProduct = () => {
+
+      const inputType = document.getElementById('selectProduct') as HTMLInputElement
+      const inputCant = document.getElementById('productCant') as HTMLInputElement
+      almacen.almacenarProductos(parseInt(inputCant.value), inputType.value)
+      const infoStock = almacen.getStock()
+
+      const listStock = infoStock.cantProduct.map((prod)=>{
+
+            const type = listProduct.filter((prod2) => prod2.getProduct().nameProduct == prod)
+            if(type){
+                  console.log(type)
+                  return type[0]
+            }
+      })
+
+      console.log(listStock)
+}
+
+document.querySelector<HTMLButtonElement>('#addProduct')!.addEventListener('click', () => {
+      addProduct();
+});
+
 
 
 //       export const addTask = (): boolean => {
@@ -71,7 +126,6 @@ showProduct()
 //         const inputTitle = document.getElementById('title') as HTMLInputElement
 //         const inputDescription = document.getElementById('description') as HTMLInputElement
 //         const inputDate = document.getElementById('expiredDate') as HTMLInputElement
-        
 //         const newTask = new Task(inputTitle.value, inputDescription.value, new Date(inputDate.value))
 
 //         taskArray.push(newTask)

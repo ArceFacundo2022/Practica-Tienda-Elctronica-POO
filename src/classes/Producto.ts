@@ -5,17 +5,19 @@
 export interface productInfo {
   nameProduct: string, 
   description: string, 
-  precio: number
+  precio: number,
+  color: string
 }
 
-export type editProduct = {name:"nameProduct",value:string} | {name:"description",value:string} | {name:"precio",value:number}
+export type editProduct = {name:"nameProduct",value:string} | {name:"description",value:string} | {name:"precio",value:number} | {name:"color",value:string}
 export class Producto {
 
 
   constructor(
     private nameProduct: string, 
     private description: string, 
-    private precio: number){
+    private precio: number,
+    private color: string){
 
   }
 
@@ -23,7 +25,8 @@ export class Producto {
     return {
       nameProduct:this.nameProduct, 
       description: this.description, 
-      precio: this.precio
+      precio: this.precio,
+      color: this.color
     }
   }
 
@@ -37,6 +40,9 @@ export class Producto {
         break
       case "precio":
         this.precio = edit.value
+        break
+      case "color":
+        this.color = edit.value
         break
       }
   }
