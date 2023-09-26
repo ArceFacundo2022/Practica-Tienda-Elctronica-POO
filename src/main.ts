@@ -22,6 +22,7 @@ const newProduct = () => {
 
 const updateSelect = () => {
       const SelectProduct = document.getElementById('selectProduct') as HTMLSelectElement
+      const SelectProduct2 = document.getElementById('selectProduct2') as HTMLSelectElement
       let htmlProduct = `
       <option disabled selected>-Elige un tipo de producto-</option>
       `
@@ -35,6 +36,7 @@ const updateSelect = () => {
             `
       })
       SelectProduct.innerHTML = htmlProduct
+      SelectProduct2.innerHTML = htmlProduct
 }
 
 const showProduct = () => {
@@ -80,8 +82,11 @@ const showProduct = () => {
 
       listProduct.forEach((prod, indice) => {
             document.querySelector<HTMLButtonElement>(`#deleteProduct${indice}`)!.addEventListener('click', () => {
+                  almacen.deleteProduct(listProduct[indice].getProduct().nameProduct)
+                  showStock()
                   listProduct.splice(indice,1)
                   showProduct()
+                  updateSelect()
             });
       })
       
@@ -101,25 +106,131 @@ const addProduct = () => {
       const inputType = document.getElementById('selectProduct') as HTMLInputElement
       const inputCant = document.getElementById('productCant') as HTMLInputElement
       almacen.almacenarProductos(parseInt(inputCant.value), inputType.value)
+      showStock() 
+}
+
+const showStock = () => {
+      
       const infoStock = almacen.getStock()
-
+      const DivStock = document.getElementById('divStock') as HTMLDivElement
+      
       const listStock = infoStock.cantProduct.map((prod)=>{
-
+      
             const type = listProduct.filter((prod2) => prod2.getProduct().nameProduct == prod)
             if(type){
-                  console.log(type)
                   return type[0]
             }
       })
 
-      console.log(listStock)
+      let htmlStock = `
+      <h2>Stock de productos</h2>
+      <hr>
+      <table>
+            <tr>
+                  <th scope="colgroup" colspan="10">Productos</th>
+            </tr>
+      `
+      let x = 0
+      for(let i = 0; i< 5; i++){
+            htmlStock += `
+            <tr>
+            `
+            for(let j = 0; j<10; j++){
+                  if(listStock[x] != undefined){
+                        htmlStock += `
+                        <td style="background-color: ${listStock[x].getProduct().color};"></td>
+                        `
+                  }else{
+                        htmlStock += `
+                        <td>
+                        `
+                  }
+                  x++
+            }
+            htmlStock += `
+            </tr>
+            `
+      }
+      DivStock.innerHTML = htmlStock
+
+}
+
+const deleteProductStock = () => {
+      const inputType = document.getElementById('selectProduct') as HTMLInputElement
+      const inputCant = document.getElementById('productCant') as HTMLInputElement
+      almacen.quitarProducto(parseInt(inputCant.value), inputType.value)
+      showStock()
 }
 
 document.querySelector<HTMLButtonElement>('#addProduct')!.addEventListener('click', () => {
       addProduct();
 });
 
+document.querySelector<HTMLButtonElement>('#deleteProductStock')!.addEventListener('click', () => {
+      deleteProductStock();
+});
 
+showStock()
+
+//! -------------------------------------( Carrito de Compras )------------------------------------------------------
+
+import { CarroDeCompras } from "./classes/Producto"
+
+const carrito = new CarroDeCompras()
+
+const cargarCarro = () => {
+
+      const inputType = document.getElementById('selectProduct2') as HTMLInputElement
+      const inputCant = document.getElementById('CarritoCant') as HTMLInputElement
+      const product = listProduct.filter((prod)=> prod.getProduct().nameProduct == inputType.value)
+      carrito.addNewProduct(product[0], parseInt(inputCant.value))
+      almacen.quitarProducto(parseInt(inputCant.value), inputType.value)
+      showStock() 
+      console.log(carrito.getPrecioTotal())
+}
+
+const sacarCarro = () => {
+      const inputType = document.getElementById('selectProduct2') as HTMLInputElement
+      const inputCant = document.getElementById('CarritoCant') as HTMLInputElement
+      const product = listProduct.filter((prod)=> prod.getProduct().nameProduct == inputType.value)
+      carrito.deleteProduct(product[0], parseInt(inputCant.value))
+      almacen.almacenarProductos(parseInt(inputCant.value),product[0].getProduct().nameProduct)
+      showStock()
+      console.log(carrito.getPrecioTotal())
+}
+
+const showCarrito = () => {
+      const infoCarrito = carrito.getCarrito()
+      const DivCarrito = document.getElementById('divCarrito') as HTMLDivElement
+
+      let htmlCarrito = `
+      `
+        
+          const listGeometry = document.getElementById('listGeometry') as HTMLDivElement
+          let htmlGeometry: string = `
+          `
+          geoArray.forEach( geo => {
+              htmlGeometry += `
+              <div class="subComponent comp01">
+                          <h2>${geo.getType()}</h2>
+                          <img src="${geo.img}" width="150px" height="150px">
+                          <p><b>Perimetro: </b>${geo.getPerimetro()}m</p>
+                          <p><b>Area: </b>${geo.getArea()}m</p>
+                        </div>
+              `
+            })
+        
+          listGeometry.innerHTML = htmlGeometry
+          return true
+}
+
+document.querySelector<HTMLButtonElement>('#addCarrito')!.addEventListener('click', () => {
+      cargarCarro();
+});
+
+document.querySelector<HTMLButtonElement>('#sacarCarro')!.addEventListener('click', () => {
+      sacarCarro();
+});
 
 //       export const addTask = (): boolean => {
 

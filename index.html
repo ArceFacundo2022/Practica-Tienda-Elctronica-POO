@@ -43,17 +43,17 @@
             <div class="column">
               <div class="component comp02">
                 <pre>
-<label for="nameProduct"><b>Nombre del producto</b></label>
+<label for="selectProduct"><b>Nombre del producto</b></label>
 <select id="selectProduct">
   <option disabled selected>-Elige un tipo de producto-</option>
 </select>
-<label for="descriptionProduct"><b>Cantidad a agregar</b></label>
-<input type="number" id="productCant">
-<input type="button" id="addProduct" value="Enviar ☑️">
+<label for="productCant"><b>Cantidad a agregar</b></label>
+<input style="margin-bottom: 18px;" type="number" id="productCant">
+<input type="button" id="addProduct" value="Enviar ☑️"> ⩤|⩥ <input type="button" id="deleteProductStock" value="Eliminar ❌">
                 </pre>
               </div>
               <div id="divStock" class="component comp03">
-                <h2>Catalogo de Productos</h2>
+                <h2>Stock de productos</h2>
                 <hr>
               </div>
             </div>
@@ -69,6 +69,45 @@
         <form name="Ventas">
           <fieldset>
             <legend>Seccion <b>Ventas</b></legend>
+            <div class="column">
+              <div class="component comp02">
+                <pre>
+<label for="selectProduct2"><b>Nombre del producto</b></label>
+<select id="selectProduct2">
+<option disabled selected>-Elige un tipo de producto-</option>
+</select>
+<label for="CarritoCant"><b>Cantidad a agregar</b></label>
+<input style="margin-bottom: 18px;" type="number" id="CarritoCant">
+<input type="button" id="addCarrito" value="Enviar ☑️"> ⩤|⩥ <input type="button" id="sacarCarro" value="Eliminar ❌">
+                </pre>
+              </div>
+              <div class="component comp03">
+                <h2>Carrito de compras</h2>
+                <div id="divCarrito" class="column">
+                  <div class="subComponent">
+                      <div class="column">
+                        <div class="">
+                          <fieldset>
+                            <h3>Mouse Gamer</h3>
+                            <p><b>Cantidad: </b>3  | <b>Oferta: </b> Unidad | <span class="Estado"><b>TOTAL: </b>2000</span></p>
+                            <hr>
+                            <h3>Mouse Gamer</h3>
+                            <p><b>Cantidad: </b>3  | <b>Oferta: </b> Unidad | <span class="Estado"><b>TOTAL: </b>2000</span></p>
+                            <hr>
+                            <h3>Mouse Gamer</h3>
+                            <p><b>Cantidad: </b>3  | <b>Oferta: </b> Unidad | <span class="Estado"><b>TOTAL: </b>2000</span></p>
+                            <hr>
+                            <h2 class="Estado">TOTAL: 6000</h2>
+                          </fieldset>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <hr>
+                <h2>Registro de ventas</h2>
+                <hr>
+              </div>
+            </div>
           </fieldset>
         </form>
       </main>
@@ -77,11 +116,6 @@
       </footer>
     </div>
     <script type="module" src="/src/main.ts"></script>
-    <script>
-      const hola = () => {
-        alert("hola")
-      }
-    </script>
     <style>
       header{
         background-color: #f7edd1;
@@ -136,7 +170,7 @@
     }
 
     .Estado{
-      color: #150ee3;
+      color: #d31c0c;
     }
       </style>
     <style>
