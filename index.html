@@ -62,7 +62,33 @@
         <br>
         <form name="Precios">
           <fieldset>
-            <legend>Seccion "Calculo de precios por: <b>Unidad | Combo | Mayoreo | Descuento</b>"</legend>
+            <legend>Seccion "Ofertas": <b>Individual | 2x1 | Descuento</b>"</legend>
+            <div class="column">
+                <div class="component comp02">
+                  <pre>
+<label for="selectProduct3"><b>Nombre del producto</b></label>
+<select id="selectProduct3">
+<option disabled selected>-Elige un tipo de producto-</option>
+</select>
+<label for="selectOferta"><b>Tipo de Oferta</b></label>
+<select id="selectOferta">
+<option disabled selected>-Elige una oferta para el producto-</option>
+<option value="individual">-Sin Oferta</option>
+<option value="Descuento">-Descuento</option>
+<option value="2x1">-2x1</option>
+</select>
+<label hidden for="descuento" id="labelDescuento"><b>Descuento a realizar</b></label>
+<input hidden style="margin-bottom: 18px;" type="number" id="descuento">
+<input type="button" id="addOferta" value="editar oferta ☑️">
+                  </pre>
+                </div>
+                <div class="component comp03 colu">
+                  <h2>Ofertas de productos</h2>
+                  <hr>
+                  <div id="divOfertas" class="column">
+                  </div>
+                </div>
+            </div>
           </fieldset>
         </form>
         <br>
@@ -166,6 +192,10 @@
     .comp03{
       width: calc(66.66% - 10px); /* Calcular el ancho de cada componente en función del número de columnas */
     }
+    .comp04{
+      width: calc(20% - 10px); /* Calcular el ancho de cada componente en función del número de columnas */
+    }
+
     .comp04{
       width: calc(20% - 10px); /* Calcular el ancho de cada componente en función del número de columnas */
     }

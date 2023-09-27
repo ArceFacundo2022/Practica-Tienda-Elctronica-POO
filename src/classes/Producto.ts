@@ -3,12 +3,12 @@
 
 //!-------------------------------( Ofertas )--------------------------------
 
-interface infoOferta {
+export interface infoOferta {
   type : tiposOferta
   descuento : number
 }
-type tiposOferta = "Descuento" | "individual" | "2x1"
-class Ofertas {
+export type tiposOferta = "Descuento" | "individual" | "2x1"
+export class Ofertas {
   private type : tiposOferta
   private descuento : number
   constructor(){
@@ -34,14 +34,17 @@ class Ofertas {
       case "individual":
         return precio * cant
       case "2x1":
-        const div = Math.trunc(precio/cant)
-        if(cant == (div*2)){
-          return cant * (precio*0.5)
-        }else{
-          return (cant-1 * (precio*0.5)) + precio
-        }
+        if (cant % 2 === 0) {
+          // La cantidad de productos es par, aplica la oferta 2x1
+          const cantidadPagar = cant / 2;
+          return cantidadPagar * precio;
+        } else {
+          // La cantidad de productos es impar, el último se paga normalmente
+          const cantidadPagar = Math.floor(cant / 2) + 1;
+          return cantidadPagar * precio;
+        } 
       case "Descuento":
-        return cant * (precio * this.descuento)
+        return Math.round(cant * (precio * (1 - this.descuento)))
     }
   }
 }

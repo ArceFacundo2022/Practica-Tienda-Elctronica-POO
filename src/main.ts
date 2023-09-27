@@ -1,3 +1,4 @@
+
 //! ------------------------------( Tienda Electronica )--------------------------------
 
 //! ------------------------------( Listar, Agregar, Editar y Eliminar Productos )--------------------------------
@@ -17,12 +18,14 @@ const newProduct = () => {
       const newProduct = new Producto(inputName.value, inputDescription.value, parseInt(inputPrecio.value), inputColor.value)
       listProduct.push(newProduct)
       showProduct()
+      showOferta()
       updateSelect()
 }
 
 const updateSelect = () => {
       const SelectProduct = document.getElementById('selectProduct') as HTMLSelectElement
       const SelectProduct2 = document.getElementById('selectProduct2') as HTMLSelectElement
+      const SelectProduct3 = document.getElementById('selectProduct3') as HTMLSelectElement
       let htmlProduct = `
       <option disabled selected>-Elige un tipo de producto-</option>
       `
@@ -37,6 +40,7 @@ const updateSelect = () => {
       })
       SelectProduct.innerHTML = htmlProduct
       SelectProduct2.innerHTML = htmlProduct
+      SelectProduct3.innerHTML = htmlProduct
 }
 
 const showProduct = () => {
@@ -86,6 +90,7 @@ const showProduct = () => {
                   showStock()
                   listProduct.splice(indice,1)
                   showProduct()
+                  showOferta()
                   updateSelect()
             });
       })
@@ -238,7 +243,85 @@ document.querySelector<HTMLButtonElement>('#addCarrito')!.addEventListener('clic
 document.querySelector<HTMLButtonElement>('#sacarCarro')!.addEventListener('click', () => {
       sacarCarro();
 });
+//! -------------------------------------( Ofertas )------------------------------------------------------
+import { tiposOferta } from "./classes/Producto"
+const addOferta = () => {
+      const selectProduct = document.querySelector<HTMLSelectElement>('#selectProduct3')!;
+      const selectOfertas = document.querySelector<HTMLSelectElement>('#selectOferta')!;
+      const inputDescuento = document.getElementById('descuento') as HTMLInputElement
+      const type: tiposOferta = selectOfertas.value as tiposOferta
 
+      if(parseFloat(inputDescuento.value) > 1){
+            alert("DESCUENTO INVALIDO: (ingrese un numero en decimal menor a 1)")
+            return false
+      }
+
+      const product = listProduct.filter((prod)=> prod.getProduct().nameProduct == selectProduct.value)
+      product[0].editOferta(type, parseFloat(inputDescuento.value))
+      showOferta()
+}
+
+const hiddenInputs = () => {
+      const selectOfertas = document.querySelector<HTMLSelectElement>('#selectOferta')!;
+      const labelDescuento = document.getElementById('labelDescuento') as HTMLLabelElement
+      const inputDescuento = document.getElementById('descuento') as HTMLInputElement
+      switch(selectOfertas.value){
+            case "individual":
+                  labelDescuento.hidden = true
+                  inputDescuento.hidden = true
+                  break
+            case "Descuento":
+                  labelDescuento.hidden = false
+                  inputDescuento.hidden = false
+                  break
+            case "2x1":
+                  labelDescuento.hidden = true
+                  inputDescuento.hidden = true
+                  break
+
+      }
+}
+
+const showOferta = () => {
+      const DivOferta = document.getElementById('divOfertas') as HTMLDivElement
+      let htmlOferta = `
+      `
+      
+      if (listProduct.length == 0){
+            DivOferta.innerHTML = htmlOferta
+            return false
+      }
+      listProduct.forEach((prod)=> {
+            const info = prod.getOferta()
+            if(info.type == "Descuento"){
+                  htmlOferta += `
+                  <div class="subComponent comp02">
+                        <h3>${prod.getProduct().nameProduct}</h3>
+                        <p><b class="Ingresos">Oferta: </b>${info.type}</p>
+                        <p><b class="Ingresos">Descuento: </b>${info.descuento*100}%</p>
+                  </div>  
+                  `
+            }else{
+                  htmlOferta += `
+                  <div class="subComponent comp02">
+                        <h3>${prod.getProduct().nameProduct}</h3>
+                        <p><b class="Ingresos">Oferta: </b>${info.type}</p>
+                  </div>  
+                  `
+            }
+      })
+      DivOferta.innerHTML = htmlOferta
+}
+
+document.querySelector<HTMLButtonElement>('#addOferta')!.addEventListener('click', () => {
+      addOferta();
+});
+
+document.querySelector<HTMLSelectElement>('#selectOferta')!.addEventListener('change', () => {
+      hiddenInputs()
+});
+
+showOferta()
 //! -------------------------------------( Carrito de Compras )------------------------------------------------------
 import { Ventas } from "./classes/Producto"
 
