@@ -79,33 +79,34 @@
 <label for="CarritoCant"><b>Cantidad a agregar</b></label>
 <input style="margin-bottom: 18px;" type="number" id="CarritoCant">
 <input type="button" id="addCarrito" value="Enviar ☑️"> ⩤|⩥ <input type="button" id="sacarCarro" value="Eliminar ❌">
+<input type="button" id="addVenta" value="Realizar la compra 🛒">
                 </pre>
               </div>
               <div class="component comp03">
                 <h2>Carrito de compras</h2>
-                <div id="divCarrito" class="column">
-                  <div class="subComponent">
+                <hr>
+                <div class="column">
+                  <div hidden class="subComponent" id="divHidden">
                       <div class="column">
-                        <div class="">
+                        <div id="divCarrito">
                           <fieldset>
-                            <h3>Mouse Gamer</h3>
-                            <p><b>Cantidad: </b>3  | <b>Oferta: </b> Unidad | <span class="Estado"><b>TOTAL: </b>2000</span></p>
-                            <hr>
-                            <h3>Mouse Gamer</h3>
-                            <p><b>Cantidad: </b>3  | <b>Oferta: </b> Unidad | <span class="Estado"><b>TOTAL: </b>2000</span></p>
-                            <hr>
-                            <h3>Mouse Gamer</h3>
-                            <p><b>Cantidad: </b>3  | <b>Oferta: </b> Unidad | <span class="Estado"><b>TOTAL: </b>2000</span></p>
-                            <hr>
-                            <h2 class="Estado">TOTAL: 6000</h2>
                           </fieldset>
                         </div>
                       </div>
                   </div>
                 </div>
-                <hr>
                 <h2>Registro de ventas</h2>
                 <hr>
+                <div class="column">
+                  <div hidden class="subComponent" id="divHidden2">
+                      <div class="column">
+                        <div id="divVenta">
+                          <fieldset>
+                          </fieldset>
+                        </div>
+                      </div>
+                  </div>
+                </div>
               </div>
             </div>
           </fieldset>
@@ -171,6 +172,9 @@
 
     .Estado{
       color: #d31c0c;
+    }
+    .Ingresos{
+      color: #200cd3;
     }
       </style>
     <style>

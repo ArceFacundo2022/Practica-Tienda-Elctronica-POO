@@ -153,6 +153,7 @@ export class Stock{
         }
       })
       this.cantProduct = newCant
+      return true
     }else{
       alert("No hay suficientes " + nameProduct + " para quitar del stock")
       return false
@@ -263,4 +264,24 @@ export class CarroDeCompras {
     }
   }
 
+  emptyCarrito(){
+    this.carro = []
+  }
+}
+
+//!--------------------- ( Ventas ) ------------------------------
+
+export class Ventas {
+  private listTicket : ticket []
+  constructor(){
+    this.listTicket = []
+  }
+
+  getList(){
+    return this.listTicket
+  }
+
+  addVenta(tic:ticket){
+    this.listTicket.push(tic)
+  }
 }

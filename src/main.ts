@@ -183,10 +183,12 @@ const cargarCarro = () => {
       const inputType = document.getElementById('selectProduct2') as HTMLInputElement
       const inputCant = document.getElementById('CarritoCant') as HTMLInputElement
       const product = listProduct.filter((prod)=> prod.getProduct().nameProduct == inputType.value)
+      if (!almacen.quitarProducto(parseInt(inputCant.value), inputType.value)){
+            return false
+      }
       carrito.addNewProduct(product[0], parseInt(inputCant.value))
-      almacen.quitarProducto(parseInt(inputCant.value), inputType.value)
       showStock() 
-      console.log(carrito.getPrecioTotal())
+      showCarrito()
 }
 
 const sacarCarro = () => {
@@ -196,32 +198,37 @@ const sacarCarro = () => {
       carrito.deleteProduct(product[0], parseInt(inputCant.value))
       almacen.almacenarProductos(parseInt(inputCant.value),product[0].getProduct().nameProduct)
       showStock()
-      console.log(carrito.getPrecioTotal())
+      showCarrito()
 }
 
 const showCarrito = () => {
-      const infoCarrito = carrito.getCarrito()
+      const infoCarrito = carrito.getPrecioTotal()
       const DivCarrito = document.getElementById('divCarrito') as HTMLDivElement
+      const divH01 = document.getElementById('divHidden') as HTMLDivElement
+
+      if(!infoCarrito.carList[0]){
+            divH01.hidden = true
+      }else{
+            divH01.hidden = false
+      }
 
       let htmlCarrito = `
+      <fieldset>
       `
-        
-          const listGeometry = document.getElementById('listGeometry') as HTMLDivElement
-          let htmlGeometry: string = `
-          `
-          geoArray.forEach( geo => {
-              htmlGeometry += `
-              <div class="subComponent comp01">
-                          <h2>${geo.getType()}</h2>
-                          <img src="${geo.img}" width="150px" height="150px">
-                          <p><b>Perimetro: </b>${geo.getPerimetro()}m</p>
-                          <p><b>Area: </b>${geo.getArea()}m</p>
-                        </div>
-              `
-            })
-        
-          listGeometry.innerHTML = htmlGeometry
-          return true
+      infoCarrito.carList.forEach( precio => {
+            htmlCarrito += `
+            <h3>${precio.nameProduct}</h3>
+            <p><b>Cantidad: </b>${precio.cant}  | <b>Oferta: </b> ${precio.oferta} | <span class="Estado"><b>Precio: </b>${precio.precioTotal}</span></p>
+            <hr>
+            `
+      })
+
+      htmlCarrito += `
+            <h2 class="Estado">TOTAL: ${infoCarrito.total}</h2>
+      </fieldset>
+      `
+      DivCarrito.innerHTML = htmlCarrito
+      return true
 }
 
 document.querySelector<HTMLButtonElement>('#addCarrito')!.addEventListener('click', () => {
@@ -232,65 +239,65 @@ document.querySelector<HTMLButtonElement>('#sacarCarro')!.addEventListener('clic
       sacarCarro();
 });
 
-//       export const addTask = (): boolean => {
+//! -------------------------------------( Carrito de Compras )------------------------------------------------------
+import { Ventas } from "./classes/Producto"
 
-//         const inputTitle = document.getElementById('title') as HTMLInputElement
-//         const inputDescription = document.getElementById('description') as HTMLInputElement
-//         const inputDate = document.getElementById('expiredDate') as HTMLInputElement
-//         const newTask = new Task(inputTitle.value, inputDescription.value, new Date(inputDate.value))
+const listVentas = new Ventas()
 
-//         taskArray.push(newTask)
-//         MostrarTareas()
+const newVenta = () => {
 
-//         return true
-//       }
+      if(!carrito.getCarrito()[0]){
+            alert('Agrege algo al carrito para poder realizar la venta 💰')
+            return false
+      }
+      listVentas.addVenta(carrito.getPrecioTotal())
+      carrito.emptyCarrito()
+      showVentas()
+      showCarrito()
+}
 
-//       export const MostrarTareas = ():boolean => {
+const showVentas = () => {
 
-//         if (taskArray.length == 0){
-//           return false
-//         }
+      const infoVenta = listVentas.getList()
+      const DivVenta = document.getElementById('divVenta') as HTMLDivElement
+      const divH02 = document.getElementById('divHidden2') as HTMLDivElement
 
-//         const divTasks = document.getElementById('divTask') as HTMLDivElement
-//         let htmlTask: string = `
-//         <h1>Tareas</h1>
-//         `
-//         taskArray.forEach( (tarea, indice) => {
-//           const info: taskInfo = tarea.getInfo()
-//           if (info.isActive == true){
-//             htmlTask += `
-//             <hr>
-//             <section>
-//                   <h2 class="Estado">${info.title}</h2>
-//                   <p><b>DESCRIPCION:</b>\n ${info.description}</p>
-//                   <h3 class="Estado">${info.state}</h3>
-//                   <p><b>FECHA DE VENCIMIENTO: </b>\n ${info.expiredDate}</p>
-//                   <input type="button" id="retroceso${indice}" value="◀️" onclick="">  |  <input type="button" id="delete${indice}" value="❌" onclick="">  |  <input type="button" id="avance${indice}" value="▶️" onclick="">
-//                   <hr>
-//                 </section>
-//             `
-//           }
-//         })
+      if(!infoVenta[0]){
+            divH02.hidden = true
+      }else{
+            divH02.hidden = false
+      }
 
-//         divTasks.innerHTML = htmlTask
-//         taskArray.forEach((tarea,indice) => {
-//           const info: taskInfo = tarea.getInfo()
-//           if (info.isActive == true){
-//             document.querySelector<HTMLButtonElement>(`#retroceso${indice}`)!.addEventListener('click', () => {
-//               taskArray[indice].retroceso()
-//             });
-//             document.querySelector<HTMLButtonElement>(`#delete${indice}`)!.addEventListener('click', () => {
-//               taskArray[indice].delete()
-//             });
-//             document.querySelector<HTMLButtonElement>(`#avance${indice}`)!.addEventListener('click', () => {
-//               taskArray[indice].avance()
-//             });
-//           }
-//         })
-//         return true
-//       }
+      let htmlVenta = ``
+      let ingresos = 0
 
-//       document.querySelector<HTMLButtonElement>('#addTask')!.addEventListener('click', () => {
-//         addTask();
-//       });
-      export {}
+      infoVenta.forEach( ticket => {
+            htmlVenta += `
+            <fieldset>
+            `
+            ticket.carList.forEach((precio)=>{
+                  htmlVenta += `
+                  <h3>${precio.nameProduct}</h3>
+                  <p><b>Cantidad: </b>${precio.cant}  | <b>Oferta: </b> ${precio.oferta} | <span class="Estado"><b>Precio: </b>${precio.precioTotal}</span></p>
+                  <hr>
+                  `
+            })
+            htmlVenta += `
+                  <h2 class="Estado">TOTAL: ${ticket.total}</h2>
+            </fieldset>
+            <br>
+            `
+
+            ingresos +=ticket.total
+      })
+      htmlVenta += `
+            <h2 class="Ingresos">INGRESOS: ${ingresos}</h2>
+      `
+      DivVenta.innerHTML = htmlVenta
+      return true
+}
+
+document.querySelector<HTMLButtonElement>('#addVenta')!.addEventListener('click', () => {
+      newVenta();
+});
+export {}
